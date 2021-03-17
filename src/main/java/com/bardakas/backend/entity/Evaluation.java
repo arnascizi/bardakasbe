@@ -1,5 +1,8 @@
 package com.bardakas.backend.entity;
 
+import com.bardakas.backend.entity.enums.Grade;
+import com.bardakas.backend.entity.enums.OverallEvaluation;
+import com.bardakas.backend.entity.enums.Stream;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

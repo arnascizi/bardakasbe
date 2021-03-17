@@ -1,4 +1,4 @@
-package com.bardakas.backend.controller;
+package com.bardakas.backend.exception;
 
 import com.bardakas.backend.exception.EvaluationNotFoundException;
 import org.springframework.http.HttpStatus;
