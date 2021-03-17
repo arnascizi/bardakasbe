@@ -1,4 +1,4 @@
-package com.bardakas.backend.entity;
+package com.bardakas.backend.entity.db;
 
 import com.sun.istack.NotNull;
 import lombok.Data;

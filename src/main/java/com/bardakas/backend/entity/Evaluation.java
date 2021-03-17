@@ -1,5 +1,6 @@
 package com.bardakas.backend.entity;
 
+import com.bardakas.backend.entity.db.Student;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
