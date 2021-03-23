@@ -1,6 +1,5 @@
 package com.bardakas.backend;
 
-import com.bardakas.backend.entity.db.Student;
 import com.bardakas.backend.entity.dto.StudentDTO;
 import com.bardakas.backend.exception.ValidationException;
 import com.bardakas.backend.validator.StudentDTOValidator;
