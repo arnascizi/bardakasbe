@@ -27,6 +27,10 @@ public class EvaluationService {
         return evaluationRepository.findById(id).orElseThrow(() -> new EvaluationNotFoundException(id));
     }
 
+    public List<Evaluation> getAllEvaluationsByStudentId(long studentId) throws EvaluationNotFoundException {
+        return evaluationRepository.findByStudentId(studentId);
+    }
+
     public void deleteEvaluationById(long id) throws EvaluationNotFoundException {
         Evaluation evaluation = evaluationRepository.findById(id).orElseThrow(() -> new EvaluationNotFoundException(id));
         evaluationRepository.delete(evaluation);

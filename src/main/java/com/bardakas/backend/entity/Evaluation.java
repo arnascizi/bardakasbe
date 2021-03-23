@@ -1,6 +1,10 @@
 package com.bardakas.backend.entity;
 
+import com.bardakas.backend.entity.enums.Grade;
+import com.bardakas.backend.entity.enums.OverallEvaluation;
+import com.bardakas.backend.entity.enums.Stream;
 import com.bardakas.backend.entity.db.Student;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
