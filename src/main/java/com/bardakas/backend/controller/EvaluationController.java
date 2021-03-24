@@ -1,6 +1,6 @@
 package com.bardakas.backend.controller;
 
-import com.bardakas.backend.entity.Evaluation;
+import com.bardakas.backend.entity.dto.EvaluationDTO;
 import com.bardakas.backend.exception.EvaluationNotFoundException;
 import com.bardakas.backend.service.EvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/evaluations")
+@RequestMapping("api/evaluations")
 public class EvaluationController {
 
     private final EvaluationService evaluationService;
@@ -22,25 +22,28 @@ public class EvaluationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Evaluation>> getEvaluations() {
-        List<Evaluation> list = evaluationService.getAllEvaluations();
-        return new ResponseEntity<List<Evaluation>>(list, HttpStatus.OK);
+    public ResponseEntity<List<EvaluationDTO>> getEvaluations() {
+        List<EvaluationDTO> list = evaluationService.getAllEvaluations();
+        return new ResponseEntity<List<EvaluationDTO>>(list, HttpStatus.OK);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Evaluation> getEvaluationById(@PathVariable("id") Long id) {
+    public ResponseEntity<EvaluationDTO> getEvaluationById(@PathVariable("id") Long id) {
         try {
-            Evaluation evaluation = evaluationService.getEvaluationById(id);
-            return new ResponseEntity<Evaluation>(evaluation, HttpStatus.OK);
+            return new ResponseEntity<EvaluationDTO>(evaluationService.getEvaluationsById(id), HttpStatus.OK);
         } catch (EvaluationNotFoundException ex) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @GetMapping("/student/{id}")
-    public ResponseEntity<List<Evaluation>> getEvaluationsByStudentId(@PathVariable("id") Long studentId) {
-        List<Evaluation> list = evaluationService.getAllEvaluationsByStudentId(studentId);
-        return new ResponseEntity<List<Evaluation>>(list, HttpStatus.OK);
+    public ResponseEntity<List<EvaluationDTO>> getEvaluationsByStudentId(@PathVariable("id") Long studentId) {
+        try {
+        List<EvaluationDTO> list = evaluationService.getAllEvaluationsByStudentId(studentId);
+        return new ResponseEntity<List<EvaluationDTO>>(list, HttpStatus.OK);
+        } catch (EvaluationNotFoundException ex) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("{id}")
@@ -54,16 +57,16 @@ public class EvaluationController {
     }
 
     @PostMapping
-    public ResponseEntity<Evaluation> addEvaluation(@RequestBody Evaluation evaluation) {
-        evaluationService.createEvaluation(evaluation);
-        return new ResponseEntity<Evaluation>(evaluation, HttpStatus.OK);
+    public ResponseEntity<Void> addEvaluation(@RequestBody EvaluationDTO evaluationDTO) {
+        evaluationService.createEvaluation(evaluationDTO);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public ResponseEntity<Evaluation> updateEvaluation(@RequestBody Evaluation evaluation) {
+    public ResponseEntity<Void> updateEvaluation(@RequestBody EvaluationDTO evaluationDTO) {
         try {
-            evaluationService.updateEvaluation(evaluation);
-            return new ResponseEntity<Evaluation>(evaluation, HttpStatus.OK);
+            evaluationService.updateEvaluation(evaluationDTO);
+            return ResponseEntity.ok().build();
         } catch (EvaluationNotFoundException ex) {
             return ResponseEntity.notFound().build();
         }
