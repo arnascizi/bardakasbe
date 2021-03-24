@@ -1,6 +1,5 @@
 package com.bardakas.backend.validator;
 
-import com.bardakas.backend.entity.Student;
 import com.bardakas.backend.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
