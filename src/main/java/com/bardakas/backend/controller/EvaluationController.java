@@ -46,6 +46,12 @@ public class EvaluationController {
         }
     }
 
+    @GetMapping("/student/{id}")
+    public ResponseEntity<List<Evaluation>> getEvaluationsByStudentId(@PathVariable("id") Long studentId) {
+        List<Evaluation> list = evaluationService.getAllEvaluationsByStudentId(studentId);
+        return new ResponseEntity<List<Evaluation>>(list, HttpStatus.OK);
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteEvaluationById(@PathVariable("id") Long id) {
         try {
