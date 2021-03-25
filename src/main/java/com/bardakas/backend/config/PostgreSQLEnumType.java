@@ -16,10 +16,9 @@ public class PostgreSQLEnumType extends EnumType {
             int index,
             SharedSessionContractImplementor session)
             throws HibernateException, SQLException {
-        if(value == null) {
-            st.setNull( index, Types.OTHER );
-        }
-        else {
+        if (value == null) {
+            st.setNull(index, Types.OTHER);
+        } else {
             st.setObject(
                     index,
                     value.toString(),
