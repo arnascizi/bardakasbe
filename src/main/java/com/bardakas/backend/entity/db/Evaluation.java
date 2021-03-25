@@ -101,13 +101,13 @@ public class Evaluation {
     @Column(name = "overall_comments")
     String overallComments;
 
-    @NotNull
+
     @Column(name = "created_at", updatable = false)
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd' 'HH:mm:ss", timezone = "Europe/Vilnius", shape = JsonFormat.Shape.STRING)
     Date createdAt;
 
-    @NotNull
+
     @Column(name = "updated_at")
     @LastModifiedDate
     @JsonFormat(pattern = "yyyy-MM-dd' 'HH:mm:ss", timezone = "Europe/Vilnius", shape = JsonFormat.Shape.STRING)

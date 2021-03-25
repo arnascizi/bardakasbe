@@ -16,7 +16,6 @@ public class EvaluationDTOValidator {
     }
 
     public void validate(EvaluationDTO evaluationDTO) {
-        mandatoryStringValueValidator.validate(evaluationDTO.getTeacherComment(), "Teacher comment cannot be blank");
         commentsValidator.validate(evaluationDTO.getTeacherComment(), "Teacher comments cannot exceed 255 characters");
         commentsValidator.validate(evaluationDTO.getCommunicationComment(), "Communication comments cannot exceed 255 characters");
         commentsValidator.validate(evaluationDTO.getExtraMileComments(), "Extra Mile comments cannot exceed 255 characters");

@@ -17,4 +17,9 @@ public class EvaluationExceptionController {
     public ResponseEntity<Object> exception(StudentEvaluationsNotFoundException exception) {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(value = EvaluationExistException.class)
+    public ResponseEntity<Object> exception(EvaluationExistException exception) {
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.CONFLICT);
+    }
 }
