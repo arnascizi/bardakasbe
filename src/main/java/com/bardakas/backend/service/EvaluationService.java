@@ -2,9 +2,10 @@ package com.bardakas.backend.service;
 
 import com.bardakas.backend.entity.db.Evaluation;
 import com.bardakas.backend.entity.dto.EvaluationDTO;
+import com.bardakas.backend.entity.enums.Stream;
 import com.bardakas.backend.exception.EvaluationExistException;
 import com.bardakas.backend.exception.EvaluationNotFoundException;
-import com.bardakas.backend.exception.StudentEvaluationsNotFoundException;
+import com.bardakas.backend.exception.EvaluationsNotFoundException;
 import com.bardakas.backend.repository.EvaluationRepository;
 import com.bardakas.backend.validator.EvaluationDTOValidator;
 import org.modelmapper.ModelMapper;
@@ -27,7 +28,8 @@ public class EvaluationService {
         this.modelMapper = modelMapper;
         this.evaluationDTOValidator = evaluationDTOValidator;
     }
-    public Evaluation findEvaluationById(long id){
+
+    public Evaluation findEvaluationById(long id) {
         return evaluationRepository.findById(id).orElseThrow(() -> new EvaluationNotFoundException(id));
 
     }
@@ -45,15 +47,37 @@ public class EvaluationService {
         return modelMapper.map(evaluation, EvaluationDTO.class);
     }
 
-    public List<EvaluationDTO> getAllEvaluationsByStudentId(long studentId) throws StudentEvaluationsNotFoundException {
+    public List<EvaluationDTO> getAllEvaluationsByStudentId(long studentId) throws EvaluationsNotFoundException {
         List<EvaluationDTO> evaluationsByStudentId = evaluationRepository.findAllByStudentId(studentId)
                 .stream()
                 .map(evaluation -> modelMapper.map(evaluation, EvaluationDTO.class))
                 .collect(Collectors.toList());
         if (evaluationsByStudentId.isEmpty()) {
-            throw new StudentEvaluationsNotFoundException(studentId);
+            throw new EvaluationsNotFoundException();
         }
         return evaluationsByStudentId;
+    }
+
+    public List<EvaluationDTO> getAllEvaluationsByTeacherId(long teacherId) throws EvaluationsNotFoundException {
+        List<EvaluationDTO> evaluationsByTeacherId = evaluationRepository.findAllByTeacherId(teacherId)
+                .stream()
+                .map(evaluation -> modelMapper.map(evaluation, EvaluationDTO.class))
+                .collect(Collectors.toList());
+        if (evaluationsByTeacherId.isEmpty()) {
+            throw new EvaluationsNotFoundException();
+        }
+        return evaluationsByTeacherId;
+    }
+
+    public List<EvaluationDTO> getAllEvaluationsByStream(Stream stream) throws EvaluationsNotFoundException {
+        List<EvaluationDTO> evaluationsByStream = evaluationRepository.findAllByStream(stream)
+                .stream()
+                .map(evaluation -> modelMapper.map(evaluation, EvaluationDTO.class))
+                .collect(Collectors.toList());
+        if (evaluationsByStream.isEmpty()) {
+            throw new EvaluationsNotFoundException();
+        }
+        return evaluationsByStream;
     }
 
     public void deleteEvaluationById(long id) throws EvaluationNotFoundException {
