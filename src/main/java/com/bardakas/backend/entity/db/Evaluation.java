@@ -1,13 +1,15 @@
 package com.bardakas.backend.entity.db;
 
+import com.bardakas.backend.config.PostgreSQLEnumType;
 import com.bardakas.backend.entity.Teacher;
-import com.bardakas.backend.entity.db.Student;
 import com.bardakas.backend.entity.enums.Grade;
 import com.bardakas.backend.entity.enums.OverallEvaluation;
 import com.bardakas.backend.entity.enums.Stream;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -23,6 +25,7 @@ import java.util.Date;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
+@TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
 @Table(name = "evaluation")
 public class Evaluation {
 
@@ -33,6 +36,7 @@ public class Evaluation {
 
     @NotNull
     @Column(name = "stream")
+    @Type(type = "pgsql_enum")
     @Enumerated(EnumType.STRING)
     Stream stream;
 
@@ -46,12 +50,12 @@ public class Evaluation {
     @JoinColumn(name = "student_id", nullable = false)
     Student student;
 
-    @NotNull
-    @NotBlank
+    @Column(name = "teacher_comment")
     String teacherComment;
 
     @NotNull
     @Column(name = "communication_grade")
+    @Type(type = "pgsql_enum")
     @Enumerated(EnumType.STRING)
     Grade communicationGrade;
 
@@ -79,6 +83,7 @@ public class Evaluation {
 
     @NotNull
     @Column(name = "ability_to_learn_grade")
+    @Type(type = "pgsql_enum")
     @Enumerated(EnumType.STRING)
     Grade abilityToLearnGrade;
 
@@ -87,6 +92,7 @@ public class Evaluation {
 
     @NotNull
     @Column(name = "overall_evaluation")
+    @Type(type = "pgsql_enum")
     @Enumerated(EnumType.STRING)
     OverallEvaluation overallEvaluation;
 

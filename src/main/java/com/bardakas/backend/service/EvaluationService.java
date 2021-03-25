@@ -2,6 +2,7 @@ package com.bardakas.backend.service;
 
 import com.bardakas.backend.entity.db.Evaluation;
 import com.bardakas.backend.entity.dto.EvaluationDTO;
+import com.bardakas.backend.exception.EvaluationExistException;
 import com.bardakas.backend.exception.EvaluationNotFoundException;
 import com.bardakas.backend.exception.StudentEvaluationsNotFoundException;
 import com.bardakas.backend.repository.EvaluationRepository;
@@ -71,7 +72,18 @@ public class EvaluationService {
 
     public void createEvaluation(EvaluationDTO evaluationDTO) {
         evaluationDTOValidator.validate(evaluationDTO);
-        Evaluation evaluation = modelMapper.map(evaluationDTO, Evaluation.class);
-        evaluationRepository.save(evaluation);
+        if (containsSameStreamStudentTeacher(getAllEvaluations(), evaluationDTO)) {
+            throw new EvaluationExistException();
+        } else {
+            Evaluation evaluation = modelMapper.map(evaluationDTO, Evaluation.class);
+            evaluationRepository.save(evaluation);
+        }
+    }
+
+    public boolean containsSameStreamStudentTeacher(List<EvaluationDTO> list, EvaluationDTO evaluation) {
+        return list.stream().anyMatch(eval -> (eval.getStream().equals(evaluation.getStream()) &&
+                eval.getStudentId().equals(evaluation.getStudentId()) && eval.getTeacherId().equals(evaluation.getTeacherId()))
+        );
     }
 }
+
