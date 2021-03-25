@@ -32,7 +32,7 @@ public class TeacherController {
         return new ResponseEntity<Teacher>(teacher, HttpStatus.OK);
     }
 
-    @GetMapping("login")
+    @PostMapping("login")
     public ResponseEntity<Teacher> getTeacherByLogin(@RequestBody Teacher loginInfo) {
         Teacher teacher = teacherService.getByLogin(loginInfo);
         return new ResponseEntity<Teacher>(teacher, HttpStatus.OK);
