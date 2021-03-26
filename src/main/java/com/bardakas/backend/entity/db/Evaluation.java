@@ -35,19 +35,19 @@ public class Evaluation {
     Long id;
 
     @NotNull
-    @Column(name = "stream")
+    @Column(name = "stream", updatable = false)
     @Type(type = "pgsql_enum")
     @Enumerated(EnumType.STRING)
     Stream stream;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "teacher_id", nullable = false)
+    @JoinColumn(name = "teacher_id", nullable = false, updatable = false)
     Teacher teacher;
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "student_id", nullable = false)
+    @JoinColumn(name = "student_id", nullable = false, updatable = false)
     Student student;
 
     @Column(name = "teacher_comment")
