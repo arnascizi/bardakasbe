@@ -64,15 +64,11 @@ public class EvaluationService {
 
     public void updateEvaluation(EvaluationDTO evaluationDTO) throws EvaluationNotFoundException {
         evaluationDTOValidator.validate(evaluationDTO);
-        if (containsSameStreamStudentTeacher(getAllEvaluations(), evaluationDTO)) {
-            throw new EvaluationExistException();
-        } else {
-            long id = evaluationDTO.getId();
-            Evaluation evaluation = findEvaluationById(id);
-            evaluation = modelMapper.map(evaluationDTO, Evaluation.class);
-            evaluation.setId(id);
-            evaluationRepository.save(evaluation);
-        }
+        long id = evaluationDTO.getId();
+        Evaluation evaluation = findEvaluationById(id);
+        evaluation = modelMapper.map(evaluationDTO, Evaluation.class);
+        evaluation.setId(id);
+        evaluationRepository.save(evaluation);
     }
 
     public void createEvaluation(EvaluationDTO evaluationDTO) throws EvaluationExistException {
