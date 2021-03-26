@@ -27,7 +27,8 @@ public class EvaluationService {
         this.modelMapper = modelMapper;
         this.evaluationDTOValidator = evaluationDTOValidator;
     }
-    public Evaluation findEvaluationById(long id){
+
+    public Evaluation findEvaluationById(long id) {
         return evaluationRepository.findById(id).orElseThrow(() -> new EvaluationNotFoundException(id));
 
     }
@@ -63,14 +64,18 @@ public class EvaluationService {
 
     public void updateEvaluation(EvaluationDTO evaluationDTO) throws EvaluationNotFoundException {
         evaluationDTOValidator.validate(evaluationDTO);
-        long id = evaluationDTO.getId();
-        Evaluation evaluation = findEvaluationById(id);
-        evaluation = modelMapper.map(evaluationDTO, Evaluation.class);
-        evaluation.setId(id);
-        evaluationRepository.save(evaluation);
+        if (containsSameStreamStudentTeacher(getAllEvaluations(), evaluationDTO)) {
+            throw new EvaluationExistException();
+        } else {
+            long id = evaluationDTO.getId();
+            Evaluation evaluation = findEvaluationById(id);
+            evaluation = modelMapper.map(evaluationDTO, Evaluation.class);
+            evaluation.setId(id);
+            evaluationRepository.save(evaluation);
+        }
     }
 
-    public void createEvaluation(EvaluationDTO evaluationDTO) {
+    public void createEvaluation(EvaluationDTO evaluationDTO) throws EvaluationExistException {
         evaluationDTOValidator.validate(evaluationDTO);
         if (containsSameStreamStudentTeacher(getAllEvaluations(), evaluationDTO)) {
             throw new EvaluationExistException();
