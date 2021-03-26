@@ -1,6 +1,7 @@
 package com.bardakas.backend.controller;
 
 import com.bardakas.backend.entity.dto.EvaluationDTO;
+import com.bardakas.backend.entity.enums.Stream;
 import com.bardakas.backend.exception.EvaluationNotFoundException;
 import com.bardakas.backend.service.EvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +40,33 @@ public class EvaluationController {
     @GetMapping("/student/{id}")
     public ResponseEntity<List<EvaluationDTO>> getEvaluationsByStudentId(@PathVariable("id") Long studentId) {
         try {
-        List<EvaluationDTO> list = evaluationService.getAllEvaluationsByStudentId(studentId);
-        return new ResponseEntity<List<EvaluationDTO>>(list, HttpStatus.OK);
+            List<EvaluationDTO> list = evaluationService.getAllEvaluationsByStudentId(studentId);
+            return new ResponseEntity<List<EvaluationDTO>>(list, HttpStatus.OK);
         } catch (EvaluationNotFoundException ex) {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/teacher/{id}")
+    public ResponseEntity<List<EvaluationDTO>> getEvaluationsByTeacherId(@PathVariable("id") Long teacherId) {
+        try {
+            List<EvaluationDTO> list = evaluationService.getAllEvaluationsByTeacherId(teacherId);
+            return new ResponseEntity<List<EvaluationDTO>>(list, HttpStatus.OK);
+        } catch (EvaluationNotFoundException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/stream/{stream}")
+    public ResponseEntity<List<EvaluationDTO>> getEvaluationsByStream(@PathVariable("stream") Stream stream) {
+        try {
+            List<EvaluationDTO> list = evaluationService.getAllEvaluationsByStream(stream);
+            return new ResponseEntity<List<EvaluationDTO>>(list, HttpStatus.OK);
+        } catch (EvaluationNotFoundException ex) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteEvaluationById(@PathVariable("id") Long id) {
