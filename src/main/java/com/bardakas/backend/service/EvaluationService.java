@@ -58,15 +58,11 @@ public class EvaluationService {
         return evaluationsByStudentId;
     }
 
-    public List<EvaluationDTO> getAllEvaluationsByTeacherId(long teacherId) throws EvaluationsNotFoundException {
-        List<EvaluationDTO> evaluationsByTeacherId = evaluationRepository.findAllByTeacherId(teacherId)
+    public List<EvaluationDTO> getAllEvaluationsByTeacherId(long teacherId) {
+        return evaluationRepository.findAllByTeacherId(teacherId)
                 .stream()
                 .map(evaluation -> modelMapper.map(evaluation, EvaluationDTO.class))
                 .collect(Collectors.toList());
-        if (evaluationsByTeacherId.isEmpty()) {
-            throw new EvaluationsNotFoundException();
-        }
-        return evaluationsByTeacherId;
     }
 
     public List<EvaluationDTO> getAllEvaluationsByStream(Stream stream) throws EvaluationsNotFoundException {
