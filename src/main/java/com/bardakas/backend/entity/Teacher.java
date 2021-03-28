@@ -38,4 +38,8 @@ public class Teacher {
     @NotBlank
     @Column(name = "password")
     private String password;
+
+    @NotNull
+    @Column(name = "is_teacher")
+    private Boolean isTeacher;
 }
